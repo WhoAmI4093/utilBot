@@ -100,7 +100,8 @@
   },
   "include": [
     "src/index.ts", // or specify the path to your main "index.ts" file directly
-    "src/commands/**/*.ts"
+    "src/commands/**/*.ts",
+    "src/server.ts"
   ],
   "exclude": [
     "node_modules"

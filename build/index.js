@@ -31,6 +31,7 @@ const discord_js_1 = require("discord.js");
 const path_1 = __importDefault(require("path"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+let keepAlive = require('./server');
 let commandsData = new discord_js_1.Collection();
 let commandsFunctions = new discord_js_1.Collection();
 function loadCommandsFrom(dir) {
@@ -69,3 +70,4 @@ client.on(discord_js_1.Events.InteractionCreate, async (Interaction) => {
 });
 const TOKEN = process.env.TOKEN;
 client.login(TOKEN);
+keepAlive();

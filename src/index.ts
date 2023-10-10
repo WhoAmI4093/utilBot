@@ -3,6 +3,7 @@ import { ActivityType, AllowedMentionsTypes, Channel, ChannelType, ChatInputComm
 import path from 'path'
 import dotenv from 'dotenv'
 dotenv.config()
+let keepAlive = require('./server')
 
 
 let commandsData = new Collection<string, RESTPostAPIChatInputApplicationCommandsJSONBody>()
@@ -50,3 +51,4 @@ client.on(Events.InteractionCreate, async Interaction => {
 
 const TOKEN = process.env.TOKEN
 client.login(TOKEN)
+keepAlive()
