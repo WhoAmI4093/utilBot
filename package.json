@@ -1,0 +1,12 @@
+{
+  "name": "utilbot",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "author": "Goose532 <kklaer532@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "debug": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node build/index.js"
+  }
+}
