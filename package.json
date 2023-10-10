@@ -8,5 +8,13 @@
     "debug": "ts-node src/index.ts",
     "build": "tsc",
     "start": "node build/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.4"
+  },
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
   }
 }

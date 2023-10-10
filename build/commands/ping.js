@@ -12,7 +12,6 @@ let execute = async (interaction) => {
             .setTitle('Pong')
             .setColor('Green')
             .setDescription(text);
-        throw new Error();
         await interaction.reply({ embeds: [embed] });
     }
     catch (err) {
