@@ -10,7 +10,6 @@ export let execute: (i: ChatInputCommandInteraction) => Promise<void> = async (i
             .setTitle('Pong')
             .setColor('Green')
             .setDescription(text)
-        throw new Error()
         await interaction.reply({ embeds: [embed] })
     } catch (err) {
         if (err) {
