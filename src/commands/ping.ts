@@ -1,11 +1,14 @@
 import { ChatInputCommandInteraction, CommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js'
-
+import fs from 'fs'
 export let data: SlashCommandBuilder = new SlashCommandBuilder()
     .setName('ping')
     .setDescription('Replies with pong!')
 export let execute: (i: ChatInputCommandInteraction) => Promise<void> = async (interaction: ChatInputCommandInteraction) => {
     try {
         let text = `Ping is \`${interaction.client.ws.ping}ms\``
+        var writeStream = fs.createWriteStream("ping.txt");
+        writeStream.write(`${Date.now()}`);
+        writeStream.end();
         let embed = new EmbedBuilder()
             .setTitle('Pong')
             .setColor('Green')
