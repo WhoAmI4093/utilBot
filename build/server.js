@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.keepAlive = void 0;
 const express = require('express');
 const server = express();
-server.all(`/`, (req, res) => {
+server.all(/.*/, (req, res) => {
     res.send(`Result: [OK].`);
 });
 function keepAlive() {
