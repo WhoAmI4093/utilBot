@@ -5,7 +5,7 @@
   "author": "Goose532 <kklaer532@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "debug": "ts-node --no-warnings src/index.ts",
+    "debug": "ts-node src/index.ts",
     "build": "tsc",
     "start": "node --no-warnings build/index.js"
   },

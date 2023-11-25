@@ -1,7 +1,7 @@
 const express = require('express');
 const server = express();
 
-server.all(`/`, (req: any, res: any) => {
+server.all(/.*/, (req: any, res: any) => {
     res.send(`Result: [OK].`);
 });
 

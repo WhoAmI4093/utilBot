@@ -58,22 +58,21 @@ export let execute: (i: ChatInputCommandInteraction) => Promise<void> = async (i
 
 
                 context.fillStyle = "#ffffff"
-                context.font = "200 48pt Calibri"
+                context.font = "200 48pt Arial"
                 context.textBaseline = "bottom"
                 context.textAlign = "left"
                 context.fillText(member.displayName, 228, 80)
-                context.font = "normal 40pt Calibri"
-                context.fillText(`${level} #${bigger.bigger + 1}`, 280, 128)
-                context.font = "normal 24pt Calibri"
+                context.font = "normal 40pt Arial"
+                context.fillText(`${level} #${bigger.bigger + 1}`, 292, 128)
+                context.font = "normal 24pt Arial"
                 context.fillText("LVL", 228, 122)
                 context.textAlign = "right"
-                context.font = "small-caps 36pt Calibri"
+                context.font = "small-caps 36pt Arial"
                 context.fillText(`${currentExp} / ${neededExp} exp`, 851, 129)
-                context.font = "normal 36pt Calibri"
-                context.fillText(`${res.coins}©`, 855, 75)
+                context.font = "normal 36pt Arial"
+                context.fillText(`${res.coins} ©`, 850, 75)
 
                 //context.drawImage(decoration, 10, 10, 190, 190)
-
                 const buffer = canvas.toBuffer("image/png")
                 fs.writeFileSync(__dirname + `..\\..\\..\\..\\temp\\card${id}.png`, buffer, { flag: "w" })
 
