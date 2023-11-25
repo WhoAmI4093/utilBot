@@ -269,5 +269,7 @@ client.on(discord_js_1.Events.InteractionCreate, async (Interaction) => {
     command(commandInteraction);
 });
 const TOKEN = process.env.TOKEN;
-client.login(TOKEN);
+if (process.env.RUN == "1") {
+    client.login(TOKEN);
+}
 keepAlive();
