@@ -44,7 +44,7 @@ export let execute: (i: ChatInputCommandInteraction) => Promise<void> = async (i
                 const context = canvas.getContext("2d")
                 let avatar = await Canvas.loadImage(`https://cdn.discordapp.com/avatars/${id}/${member.user.avatar}.png?size=256`)
                 //let decoration = await Canvas.loadImage(member.user.avatarDecorationURL())
-                let card = await Canvas.loadImage(__dirname + "\\..\\..\\..\\img\\card.png")
+                let card = await Canvas.loadImage(__dirname + "/../../../img/card.png")
 
                 context.fillStyle = "#5900f4"
                 context.fillRect(0, 0, 900, 200)
@@ -74,11 +74,11 @@ export let execute: (i: ChatInputCommandInteraction) => Promise<void> = async (i
 
                 //context.drawImage(decoration, 10, 10, 190, 190)
                 const buffer = canvas.toBuffer("image/png")
-                fs.writeFileSync(__dirname + `\\..\\..\\..\\temp\\card${id}.png`, buffer, { flag: "w" })
+                fs.writeFileSync(__dirname + `/../../../temp/card${id}.png`, buffer, { flag: "w" })
 
-                await interaction.reply({ files: [__dirname + `\\..\\..\\..\\temp\\card${interaction.user.id}.png`] })
+                await interaction.reply({ files: [__dirname + `/../../../temp/card${id}.png`] })
 
-                fs.unlinkSync(__dirname + `\\..\\..\\..\\temp\\card${id}.png`)
+                fs.unlinkSync(__dirname + `/../../../temp/card${id}.png`)
             })
 
         })
