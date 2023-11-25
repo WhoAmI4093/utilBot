@@ -273,5 +273,7 @@ client.on(Events.InteractionCreate, async Interaction => {
 })
 
 const TOKEN = process.env.TOKEN
-client.login(TOKEN)
+if (process.env.RUN == "1") {
+    client.login(TOKEN)
+}
 keepAlive()
