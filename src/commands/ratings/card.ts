@@ -21,8 +21,6 @@ export let execute: (i: ChatInputCommandInteraction) => Promise<void> = async (i
         let member = (interaction.options.getMember("member") ?? interaction.member) as GuildMember
         let id = member.id
 
-        console.log(id)
-
         sql.get("SELECT * FROM members WHERE id=?", id, async (err, res: any) => {
             sql.get("SELECT COUNT(CASE WHEN exp > ? THEN 1 END) AS bigger FROM members", async (err, bigger: any) => {
                 if (!res) {
