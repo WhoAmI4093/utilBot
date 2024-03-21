@@ -102,7 +102,7 @@ async function visualizeProbabilities(min: number, max: number, avg: number, num
     const histogram = new Array(101).fill(0); // 101 discrete intervals from 0 to 1
 
     for (let i = 0; i < numSamples; i++) {
-        let randomValue = await generateRandomNormalDisctribution(min, max, avg, 3);
+        let randomValue = await getRandomTriangleDistribution(min, max, avg)
         let index = Math.floor(randomValue * 100);
         histogram[index]++;
     }
@@ -115,7 +115,6 @@ async function visualizeProbabilities(min: number, max: number, avg: number, num
         console.log(`[${i / 100}, ${probabilities[i].toFixed(8)}],`);
     }
 }
-
 async function visualizeProbabilitiesTriangular(low: number, high: number, mode: number, numSamples: number) {
     const histogram = new Array(101).fill(0); // 101 discrete intervals from 0 to 1
 

@@ -1,6 +1,7 @@
 import { Case } from "./case"
+import { CraftingRecipe } from "./craftingRecipe"
 import { Game } from "./game"
-import { ItemInstance } from "./item"
+import { ItemInstance, ItemTemplate } from "./item"
 import c from 'ansi-colors'
 export class Player {
     id: string
@@ -79,7 +80,34 @@ export class Player {
 
     }
     //                       uniqueID instance
-    unstackableInventory: Map<number, ItemInstance> = new Map()
+    async craft(id: number) {
+        let recipe = Game.craftingRecipies.get(id) ?? CraftingRecipe.empty
+        // TODO: figure out stable materials
+        let inv = await this.stackableInventory
+        let flag = true
+        for (let material of recipe.materials) {
+            if (inv.get(material[0]) ?? 0 >= material[1]) {
+                flag = false
+                break
+            }   
+        }
+        if (!flag) {
+            // NOt enough materials
+            return -1
+        }
+        for (let product of recipe.output) {
+            let itemTemplate = Game.Items.get(product[0]) ?? ItemTemplate.empty
+            if (itemTemplate.isStackable) {
+                // TODO SQL
+            }
+            else {
+                for (let i = 0; i < product[1]; i++) {
+                    let instance = await itemTemplate.generate()
+                    instance.insertIntoUnstackableInventory(this.id)
+                }
+            }
+        }
+    }
 
     constructor(id: string) {
         this.id = id

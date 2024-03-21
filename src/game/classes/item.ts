@@ -2,9 +2,10 @@ import { color } from "./func/colorfromrarity"
 import { getRandomFloat, getRandomInt } from "./func/random"
 import { Game } from "./game"
 export class ItemTemplate {
+    static empty: ItemTemplate
     id: number
-    name: string
-    description: string
+    name: string = ""
+    description: string = ""
     features: number = 0
 
     rarity: number = 0
@@ -23,7 +24,9 @@ export class ItemTemplate {
         return item
     }
 }
-
+let empty = new ItemTemplate()
+empty.id = 0
+ItemTemplate.empty = empty
 export class Property {
     id: number
     name: string

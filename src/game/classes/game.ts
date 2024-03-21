@@ -2,12 +2,14 @@ import { ItemTemplate, Property } from "./item";
 import sqlite3 from 'sqlite3'
 import { Player } from "./player";
 import { Case, Category } from "./case";
+import { CraftingRecipe } from "./craftingRecipe";
 
 let db = new sqlite3.Database(__dirname + "/../../../db/game.db")
 
 export class Game {
     static Items: Map<number, ItemTemplate> = new Map()
     static Cases: Map<number, Case> = new Map()
+    static craftingRecipies: Map<number, CraftingRecipe> = new Map()
     static db = db
     static async loadItems() {
         return new Promise<void>((resolve, reject) => {
