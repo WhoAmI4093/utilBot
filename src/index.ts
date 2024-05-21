@@ -22,31 +22,10 @@ let keepAlive = require('./server')
 
 
 let db = new sqlite3.Database(__dirname + "/../db/members.db")
-db.run(`CREATE TABLE IF NOT EXISTS "mutes" (
-	"id"	INTEGER,
-	"memberid"	TEXT,
-	"unmuteat"	INTEGER,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);`)
-db.run(`CREATE TABLE IF NOT EXISTS "members" (
-	"id"	TEXT UNIQUE,
-	"lastmessage"	INTEGER DEFAULT 0,
-	"exp"	INTEGER,
-	PRIMARY KEY("id")
-);`)
-db.run(`CREATE TABLE IF NOT EXISTS "warnings" (
-	"id"	INTEGER,
-	"memberid"	TEXT NOT NULL,
-	"reason"	TEXT NOT NULL,
-	"moderatorid"	TEXT NOT NULL,
-	"timestamp"	INTEGER NOT NULL,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);`)
+const punishmentsWebhook = new WebhookClient({ url: process.env.PUNISHMENTSWEBHOOKURL });
+const ticketLogsWebhook = new WebhookClient({ url: "https://discord.com/api/webhooks/1165185489700147200/3nIpRuIU2F4AiG4ABnGDbPnKQds0yi_lvaXvBLgsE8BEu8YF-Y-sDDBwDgCzY70_6TEe" })
 
-const punishmentswebhook = new WebhookClient({ url: process.env.PUNISHMENTSWEBHOOKURL });
-const ticketlogswebhook = new WebhookClient({ url: "https://discord.com/api/webhooks/1165185489700147200/3nIpRuIU2F4AiG4ABnGDbPnKQds0yi_lvaXvBLgsE8BEu8YF-Y-sDDBwDgCzY70_6TEe" })
-
-Share.fields["punishmentswebhook"] = punishmentswebhook
+Share.fields["punishmentswebhook"] = punishmentsWebhook
 Share.fields["db"] = db
 console.log(__dirname)
 
@@ -90,8 +69,8 @@ loadCommandsFrom("commands")
 
 const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMembers] });
 client.once(Events.ClientReady, async () => {
-    let guild = client.guilds.cache.get("885524229733380107")
-    await (await guild.members.fetch()).forEach(async member => {
+    let guild = client.guilds.cache.get("885524229733380107");
+    (await guild.members.fetch()).forEach((member) => {
         insertMember(member)
 
         db.get("SELECT * FROM mutes WHERE memberid=?", [member.id], (err, row: any) => {
@@ -109,7 +88,7 @@ client.once(Events.ClientReady, async () => {
     })
 
 
-    client.application.commands.set(Array.from(commandsData.values()))
+    await client.application.commands.set(Array.from(commandsData.values()))
     console.log(`Ready!`);
 })
 
@@ -121,7 +100,7 @@ client.on(Events.GuildMemberAdd, async (member) => {
 client.on(Events.MessageCreate, async (message) => {
     if (message.member.user.bot || message.member.roles.cache.has("885524229733380109")) return
     db.get("SELECT * FROM members  WHERE id=?", [message.member.id], (err, res: any) => {
-        if (Date.now() - res.lastmessage < 60 * 1000) return
+        if (Date.now() - res.lastMessage < 60 * 1000) return
         let random = randomInteger(15, 25)
         let coinsMulti = 1
 
@@ -251,7 +230,7 @@ client.on(Events.InteractionCreate, async Interaction => {
                 })
                 let date = Date.now()
                 fs.writeFileSync(__dirname + `/../temp/ticket${date}.txt`, text)
-                ticketlogswebhook.send({ content: creator, files: [__dirname + `/../temp/ticket${date}.txt`] })
+                ticketLogsWebhook.send({ content: creator, files: [__dirname + `/../temp/ticket${date}.txt`] })
                 fs.unlinkSync(__dirname + `/../temp/ticket${date}.txt`)
 
                 Interaction.channel.delete()
